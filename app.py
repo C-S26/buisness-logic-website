@@ -13,11 +13,10 @@ def shop():
     message = ""
 
     if request.method == "POST":
-
-        discount = int(request.form.get("discount"))
-
         # BUSINESS LOGIC FLAW
-        # Server trusts user supplied discount
+        # Server trusts user input without validation
+        # Attacker can send large discount → price becomes negative
+        discount = int(request.form.get("discount"))
         price = price - discount
 
         if price < 0:
